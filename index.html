@@ -103,7 +103,7 @@
     <div class="container">
         <h1>VibeScript Interpreter</h1>
         <!-- Input Textarea for VibeScript Code -->
-        <textarea id="vibescript-code" placeholder="Enter your VibeScript code here"></textarea>
+        <textarea id="vibescript-code"></textarea>
         <!-- Run Button -->
         <button id="run-button">Run VibeScript</button>
         <!-- Output Section -->
@@ -126,6 +126,37 @@
         // Add event listeners to automatically resize the input and output textareas
         const vibescriptCode = document.getElementById('vibescript-code');
         const outputBox = document.getElementById('output');
+
+        // Pre-fill the sample VibeScript code
+        const sampleCode = `
+rizz main() {
+    // Ask the user for their favorite number
+    yap("whats the most sigma number?") noCap
+    vibe favNum = glaze() noCap
+
+    // Convert input to number
+    favNum = parseInt(favNum) noCap
+
+    // Check the number
+    bet (favNum > 10) {
+        yap("thats a big number no cap") noCap
+    } vibeCheck (favNum == 10) {
+        yap("sigma number") noCap        
+    } just put the fries in the bag bro {
+        yap("bros numbers got fanum taxed") noCap
+    }
+    sigma(vibe i=0 noCap i<favNum noCap i++) {
+        yap(i) noCap
+    }
+}
+
+// Execute the main function
+main() noCap
+        `;
+        vibescriptCode.value = sampleCode.trim();
+
+        // Resize the input box based on the sample content
+        autoResizeTextarea(vibescriptCode);
 
         // Resize when typing
         vibescriptCode.addEventListener('input', function() {
