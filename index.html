@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeScript Interpreter</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        textarea {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background-color: #ecf0f1;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            resize: none; /* Disable manual resizing */
+            overflow: hidden; /* Hide scrollbar for automatic resize */
+        }
+
+        textarea:focus {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            outline: none;
+        }
+
+        #run-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #run-button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+        }
+
+        #run-button:active {
+            transform: scale(0.98);
+        }
+
+        .output-container {
+            margin-top: 20px;
+        }
+
+        .output-label {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 18px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .output-animated {
+            animation: slideIn 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VibeScript Interpreter</h1>
+        <!-- Input Textarea for VibeScript Code -->
+        <textarea id="vibescript-code" placeholder="Enter your VibeScript code here"></textarea>
+        <!-- Run Button -->
+        <button id="run-button">Run VibeScript</button>
+        <!-- Output Section -->
+        <div class="output-container">
+            <label class="output-label">Output:</label>
+            <textarea id="output" readonly class="output-animated"></textarea>
+        </div>
+    </div>
+
+    <!-- Include the interpreter script -->
+    <script src="interpreter.js"></script>
+    
+    <script>
+        // Automatically resize textareas based on content
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';  // Reset height
+            textarea.style.height = textarea.scrollHeight + 'px';  // Adjust height based on scroll height
+        }
+
+        // Add event listeners to automatically resize the input and output textareas
+        const vibescriptCode = document.getElementById('vibescript-code');
+        const outputBox = document.getElementById('output');
+
+        // Resize when typing
+        vibescriptCode.addEventListener('input', function() {
+            autoResizeTextarea(vibescriptCode);
+        });
+
+        // Automatically adjust output size when new content is added
+        const originalExecuteJSCode = executeJSCode;
+        function executeJSCode(jsCode, outputElement) {
+            originalExecuteJSCode(jsCode, outputElement);
+            autoResizeTextarea(outputElement);
+        }
+
+        // Initialize the textarea size to fit content
+        autoResizeTextarea(vibescriptCode);
+        autoResizeTextarea(outputBox);
+    </script>
+</body>
+</html>
